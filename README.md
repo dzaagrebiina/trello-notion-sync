@@ -34,12 +34,15 @@ Property names are configurable via environment variables (see `schema.py`), so 
 ## Architecture
 
 ```mermaid
-flowchart LR
-    T[Trello board] -- webhook: card changed --> A
-    N[Notion Tasks DB] -- webhook: page created / updated --> A
-    A[Flask app on Heroku<br/>/trello-webhook<br/>/notion-webhook] -- REST API write --> T
-    A -- REST API write --> N
-    A <--> DB[(Postgres<br/>id_map + recent_writes)]
+flowchart TB
+    T["Trello board"]
+    N["Notion Tasks DB"]
+    A["Flask sync service<br/>(Heroku)"]
+    DB[("Postgres<br/>ID links + recent writes")]
+
+    T <-->|"webhooks in<br/>API writes out"| A
+    N <-->|"webhooks in<br/>API writes out"| A
+    A <--> DB
 ```
 
 1. A platform sends a webhook to the app saying *something changed*.
