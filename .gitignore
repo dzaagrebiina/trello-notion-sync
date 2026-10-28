@@ -1,0 +1,16 @@
+# Secrets -- never commit real credentials
+.env
+
+# Local SQLite mapping store
+mapping.db
+
+# Python
+__pycache__/
+*.pyc
+venv/
+.venv/
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
